@@ -41,16 +41,10 @@ def isColliding(rect1, rect2):
         return True
     return False  
 
-def calculateBounceSpeedY(player_rect, ball_rect):
-    # Calculates the y speed needed to achieve realistic bouncing
-    
-    player_height = player_rect[3]
-    player_y = player_rect[1]
-    ball_y = ball_rect[1]
-
-    max_y_speed = 7
-    new_ball_speed_y = -1 * max_y_speed * (player_y+player_height/2 - ball_y) / (player_height/2)
-    return new_ball_speed_y
+def drawWinText(win_text):
+    font = pygame.font.Font(pygame.font.get_default_font(), 30)
+    text = font.render(win_text, True, (255, 255, 255))
+    screen.blit(text, (30, 30))
 
 # Main game loop
 done = False
@@ -100,12 +94,10 @@ while not done:
     # If ball colliding with Player 1
     if isColliding(player1_rect, ball_rect):
         ball_speed_x *= -1
-        ball_speed_y = calculateBounceSpeedY(player1_rect, ball_rect)
     
     # If ball colliding with Player 2
     if isColliding(player2_rect, ball_rect):
         ball_speed_x *= -1
-        ball_speed_y = calculateBounceSpeedY(player2_rect, ball_rect)
 
     # If ball colliding with the top of the screen
     if ball_y < 0:
@@ -115,6 +107,17 @@ while not done:
     elif ball_y > HEIGHT:
         ball_speed_y *= -1
         ball_y = HEIGHT
+
+    if ball_x < 0:
+        drawWinText('Player 2 Won!')
+        ball_speed_x = 0
+        ball_speed_y = 0
+        player_speed = 0
+    elif ball_x > WIDTH:
+        drawWinText('Player 1 Won!')
+        ball_speed_x = 0
+        ball_speed_y = 0
+        player_speed = 0
 
     # This displays whatever you have drawn to the screen
     # This should ALWAYS be the VERY LAST THING in this while loop
