@@ -54,7 +54,7 @@ while not done:
     
     if keys[pygame.K_UP]: # If the UP ARROW key is pressed
         player2_y -= player_speed
-    elif keys[pygame.K_DOWN]: # If the DOWN ARRAY key is pressed
+    elif keys[pygame.K_DOWN]: # If the DOWN ARROW key is pressed
         player2_y += player_speed
 
     # Draw Player 1
